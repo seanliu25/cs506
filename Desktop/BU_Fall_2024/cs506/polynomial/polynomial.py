@@ -12,12 +12,20 @@ class X:
     def __repr__(self):
         return "X"
 
+    def evaluate(self, x_value):
+        return x_value
+
+
 class Int:
     def __init__(self, i):
         self.i = i
     
     def __repr__(self):
         return str(self.i)
+
+    def evaluate(self, x_value):
+        return self.i
+
 
 class Add:
     def __init__(self, p1, p2):
@@ -26,6 +34,10 @@ class Add:
     
     def __repr__(self):
         return repr(self.p1) + " + " + repr(self.p2)
+
+    def evaluate(self, x_value):
+        return self.p1.evaluate(x_value) + self.p2.evaluate(x_value)
+
 
 class Mul:
     def __init__(self, p1, p2):
@@ -41,21 +53,24 @@ class Mul:
             return repr(self.p1) + " * ( " + repr(self.p2) + " )"
         return repr(self.p1) + " * " + repr(self.p2)
 
+    def evaluate(self, x_value):
+        return self.p1.evaluate(x_value) * self.p2.evaluate(x_value)
 
-poly = Add( Add( Int(4), Int(3)), Add( X(), Mul( Int(1), Add( Mul(X(), X()), Int(1)))))
+
+# Example polynomial: (4 + 3) + (X + (1 * ((X * X) + 1)))
+poly = Add(Add(Int(4), Int(3)), Add(X(), Mul(Int(1), Add(Mul(X(), X()), Int(1)))))
 print(poly)
-###```
+
 
 ### add and commit this file with the following message "cs 506 exercise part a". Push these changes to github.
 
 ### b) Write an `evaluate` method to each class that can evaluate the polynomial for a given value of `X`.
 
-### ```python
-### poly = Add( Add( Int(4), Int(3)), Add( X(), Mul( Int(1), Add( Mul(X(), X()), Int(1)))))
-### print(poly.evaluate(-1))
-### ```
+poly = Add( Add( Int(4), Int(3)), Add( X(), Mul( Int(1), Add( Mul(X(), X()), Int(1)))))
+print(poly.evaluate(-1))
 
-###This should return the **integer** solution when `X = -1`.
+
+### This should return the **integer** solution when `X = -1`.
 
 ### When you're done with this part, add and commit the changes with the message "cs 506 exercise part b".
 
